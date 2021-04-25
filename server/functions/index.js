@@ -1,3 +1,4 @@
+const { connection } = require("mongoose");
 const functions = require("./functions");
 
 ////
@@ -17,6 +18,14 @@ function socketCommunication(io) {
       functions.saveMessage(message);
     });
 
+    ///
+    socket.on("typing", function (state) {
+      socket.broadcast.emit("typing", state);
+    });
+    ///
+    socket.on("connected", function (connecteduser) {
+      socket.broadcast.emit("connected", connecteduser);
+    });
     /////
   });
 }
